@@ -18,40 +18,33 @@ async function seed() {
     console.log('Connected to database. Starting seed...');
 
     // --- Roles ---
-    const adminRole = await Role.create({
-      name: 'admin',
-      permissions: ['*'],
+    const [adminRole] = await Role.findOrCreate({
+      where: { name: 'admin' },
+      defaults: { permissions: ['*'] },
     });
-    const managerRole = await Role.create({
-      name: 'manager',
-      permissions: ['pos', 'inventory.view', 'inventory.edit', 'purchasing', 'reports', 'customers', 'stock.adjust', 'stock.transfer'],
+    const [managerRole] = await Role.findOrCreate({
+      where: { name: 'manager' },
+      defaults: { permissions: ['pos', 'inventory.view', 'inventory.edit', 'purchasing', 'reports', 'customers', 'stock.adjust', 'stock.transfer'] },
     });
-    const cashierRole = await Role.create({
-      name: 'cashier',
-      permissions: ['pos', 'customers', 'reports.sales'],
+    const [cashierRole] = await Role.findOrCreate({
+      where: { name: 'cashier' },
+      defaults: { permissions: ['pos', 'customers', 'reports.sales'] },
     });
-    const inventoryRole = await Role.create({
-      name: 'inventory_staff',
-      permissions: ['inventory.view', 'inventory.edit', 'purchasing', 'stock.adjust', 'reports.stock'],
+    const [inventoryRole] = await Role.findOrCreate({
+      where: { name: 'inventory_staff' },
+      defaults: { permissions: ['inventory.view', 'inventory.edit', 'purchasing', 'stock.adjust', 'reports.stock'] },
     });
 
     console.log('Roles created.');
 
     // --- Branches ---
-    const hq = await Branch.create({
-      name: 'Main Store',
-      code: 'HQ',
-      address: '123 Main Street, Downtown',
-      phone: '555-0100',
-      email: 'main@store.com',
-      isHeadquarters: true,
+    const [hq] = await Branch.findOrCreate({
+      where: { code: 'HQ' },
+      defaults: { name: 'Main Store', address: '123 Main Street, Downtown', phone: '555-0100', email: 'main@store.com', isHeadquarters: true },
     });
-    const branch2 = await Branch.create({
-      name: 'Branch North',
-      code: 'BR-N',
-      address: '456 North Avenue',
-      phone: '555-0101',
-      email: 'north@store.com',
+    const [branch2] = await Branch.findOrCreate({
+      where: { code: 'BR-N' },
+      defaults: { name: 'Branch North', address: '456 North Avenue', phone: '555-0101', email: 'north@store.com' },
     });
 
     console.log('Branches created.');
@@ -62,73 +55,43 @@ async function seed() {
     const cashierPass = await hashPassword('cashier123');
     const inventoryPass = await hashPassword('inventory123');
 
-    await User.create({
-      username: 'admin',
-      email: 'admin@invpos.com',
-      passwordHash: adminPass,
-      roleId: adminRole.id,
-      branchId: hq.id,
-      firstName: 'System',
-      lastName: 'Admin',
-      phone: '555-0001',
+    await User.findOrCreate({
+      where: { username: 'admin' },
+      defaults: { email: 'admin@invpos.com', passwordHash: adminPass, roleId: adminRole.id, branchId: hq.id, firstName: 'System', lastName: 'Admin', phone: '555-0001' },
     });
 
-    await User.create({
-      username: 'manager',
-      email: 'manager@invpos.com',
-      passwordHash: managerPass,
-      roleId: managerRole.id,
-      branchId: hq.id,
-      firstName: 'Store',
-      lastName: 'Manager',
-      phone: '555-0002',
+    await User.findOrCreate({
+      where: { username: 'manager' },
+      defaults: { email: 'manager@invpos.com', passwordHash: managerPass, roleId: managerRole.id, branchId: hq.id, firstName: 'Store', lastName: 'Manager', phone: '555-0002' },
     });
 
-    await User.create({
-      username: 'cashier',
-      email: 'cashier@invpos.com',
-      passwordHash: cashierPass,
-      roleId: cashierRole.id,
-      branchId: hq.id,
-      firstName: 'John',
-      lastName: 'Cashier',
-      phone: '555-0003',
+    await User.findOrCreate({
+      where: { username: 'cashier' },
+      defaults: { email: 'cashier@invpos.com', passwordHash: cashierPass, roleId: cashierRole.id, branchId: hq.id, firstName: 'John', lastName: 'Cashier', phone: '555-0003' },
     });
 
-    await User.create({
-      username: 'cashier2',
-      email: 'cashier2@invpos.com',
-      passwordHash: cashierPass,
-      roleId: cashierRole.id,
-      branchId: branch2.id,
-      firstName: 'Jane',
-      lastName: 'Cashier',
-      phone: '555-0004',
+    await User.findOrCreate({
+      where: { username: 'cashier2' },
+      defaults: { email: 'cashier2@invpos.com', passwordHash: cashierPass, roleId: cashierRole.id, branchId: branch2.id, firstName: 'Jane', lastName: 'Cashier', phone: '555-0004' },
     });
 
-    await User.create({
-      username: 'inventory',
-      email: 'inventory@invpos.com',
-      passwordHash: inventoryPass,
-      roleId: inventoryRole.id,
-      branchId: hq.id,
-      firstName: 'Stock',
-      lastName: 'Keeper',
-      phone: '555-0005',
+    await User.findOrCreate({
+      where: { username: 'inventory' },
+      defaults: { email: 'inventory@invpos.com', passwordHash: inventoryPass, roleId: inventoryRole.id, branchId: hq.id, firstName: 'Stock', lastName: 'Keeper', phone: '555-0005' },
     });
 
     console.log('Users created.');
 
     // --- Categories ---
-    const beverages = await Category.create({ name: 'Beverages', description: 'Drinks and liquids' });
-    const snacks = await Category.create({ name: 'Snacks', description: 'Snack foods' });
-    const dairy = await Category.create({ name: 'Dairy', description: 'Dairy products' });
-    const bakery = await Category.create({ name: 'Bakery', description: 'Baked goods' });
-    const household = await Category.create({ name: 'Household', description: 'Household items' });
-    const electronics = await Category.create({ name: 'Electronics', description: 'Electronic items' });
+    const [beverages] = await Category.findOrCreate({ where: { name: 'Beverages' }, defaults: { description: 'Drinks and liquids' } });
+    const [snacks] = await Category.findOrCreate({ where: { name: 'Snacks' }, defaults: { description: 'Snack foods' } });
+    const [dairy] = await Category.findOrCreate({ where: { name: 'Dairy' }, defaults: { description: 'Dairy products' } });
+    const [bakery] = await Category.findOrCreate({ where: { name: 'Bakery' }, defaults: { description: 'Baked goods' } });
+    const [household] = await Category.findOrCreate({ where: { name: 'Household' }, defaults: { description: 'Household items' } });
+    const [electronics] = await Category.findOrCreate({ where: { name: 'Electronics' }, defaults: { description: 'Electronic items' } });
 
-    const softDrinks = await Category.create({ name: 'Soft Drinks', parentId: beverages.id });
-    const water = await Category.create({ name: 'Water', parentId: beverages.id });
+    const [softDrinks] = await Category.findOrCreate({ where: { name: 'Soft Drinks', parentId: beverages.id }, defaults: {} });
+    const [water] = await Category.findOrCreate({ where: { name: 'Water', parentId: beverages.id }, defaults: {} });
 
     console.log('Categories created.');
 
@@ -155,7 +118,7 @@ async function seed() {
 
     const createdProducts = [];
     for (const p of products) {
-      const product = await Product.create(p);
+      const [product] = await Product.findOrCreate({ where: { sku: p.sku }, defaults: p });
       createdProducts.push(product);
     }
 
@@ -163,99 +126,66 @@ async function seed() {
 
     // --- Stock ---
     for (const product of createdProducts) {
-      await Stock.create({
-        productId: product.id,
-        branchId: hq.id,
-        quantity: Math.floor(Math.random() * 100) + 20,
-        minStockLevel: product.reorderThreshold,
+      await Stock.findOrCreate({
+        where: { productId: product.id, branchId: hq.id },
+        defaults: { quantity: Math.floor(Math.random() * 100) + 20, minStockLevel: product.reorderThreshold },
       });
 
-      await Stock.create({
-        productId: product.id,
-        branchId: branch2.id,
-        quantity: Math.floor(Math.random() * 50) + 10,
-        minStockLevel: product.reorderThreshold,
+      await Stock.findOrCreate({
+        where: { productId: product.id, branchId: branch2.id },
+        defaults: { quantity: Math.floor(Math.random() * 50) + 10, minStockLevel: product.reorderThreshold },
       });
     }
 
     console.log('Stock levels created.');
 
     // --- Suppliers ---
-    await Supplier.create({
-      name: 'Global Beverages Inc.',
-      contactPerson: 'Mike Johnson',
-      email: 'mike@globalbev.com',
-      phone: '555-1001',
-      address: '100 Supplier St, Industrial Zone',
-      paymentTerms: 'Net 30',
+    await Supplier.findOrCreate({
+      where: { name: 'Global Beverages Inc.' },
+      defaults: { contactPerson: 'Mike Johnson', email: 'mike@globalbev.com', phone: '555-1001', address: '100 Supplier St, Industrial Zone', paymentTerms: 'Net 30' },
     });
 
-    await Supplier.create({
-      name: 'Fresh Dairy Co.',
-      contactPerson: 'Sarah Lee',
-      email: 'sarah@freshdairy.com',
-      phone: '555-1002',
-      address: '200 Dairy Farm Road',
-      paymentTerms: 'Net 15',
+    await Supplier.findOrCreate({
+      where: { name: 'Fresh Dairy Co.' },
+      defaults: { contactPerson: 'Sarah Lee', email: 'sarah@freshdairy.com', phone: '555-1002', address: '200 Dairy Farm Road', paymentTerms: 'Net 15' },
     });
 
-    await Supplier.create({
-      name: 'Snack Foods Distribution',
-      contactPerson: 'Tom Wilson',
-      email: 'tom@snackdist.com',
-      phone: '555-1003',
-      address: '300 Commerce Blvd',
-      paymentTerms: 'Net 45',
+    await Supplier.findOrCreate({
+      where: { name: 'Snack Foods Distribution' },
+      defaults: { contactPerson: 'Tom Wilson', email: 'tom@snackdist.com', phone: '555-1003', address: '300 Commerce Blvd', paymentTerms: 'Net 45' },
     });
 
-    await Supplier.create({
-      name: 'Tech Supplies Ltd.',
-      contactPerson: 'Lisa Chen',
-      email: 'lisa@techsupplies.com',
-      phone: '555-1004',
-      address: '400 Tech Park Avenue',
-      paymentTerms: 'Net 30',
+    await Supplier.findOrCreate({
+      where: { name: 'Tech Supplies Ltd.' },
+      defaults: { contactPerson: 'Lisa Chen', email: 'lisa@techsupplies.com', phone: '555-1004', address: '400 Tech Park Avenue', paymentTerms: 'Net 30' },
     });
 
     console.log('Suppliers created.');
 
     // --- Customers ---
-    await Customer.create({
-      name: 'Walk-in Customer',
-      phone: '',
-      email: '',
+    await Customer.findOrCreate({
+      where: { name: 'Walk-in Customer' },
+      defaults: { phone: '', email: '' },
     });
 
-    await Customer.create({
-      name: 'Alice Anderson',
-      email: 'alice@example.com',
-      phone: '555-2001',
-      address: '101 Customer Lane',
-      loyaltyPoints: 150,
+    await Customer.findOrCreate({
+      where: { name: 'Alice Anderson' },
+      defaults: { email: 'alice@example.com', phone: '555-2001', address: '101 Customer Lane', loyaltyPoints: 150 },
     });
 
-    await Customer.create({
-      name: 'Bob Brown',
-      email: 'bob@example.com',
-      phone: '555-2002',
-      address: '102 Customer Lane',
-      loyaltyPoints: 75,
+    await Customer.findOrCreate({
+      where: { name: 'Bob Brown' },
+      defaults: { email: 'bob@example.com', phone: '555-2002', address: '102 Customer Lane', loyaltyPoints: 75 },
     });
 
-    await Customer.create({
-      name: 'Carol Clark',
-      email: 'carol@example.com',
-      phone: '555-2003',
-      address: '103 Customer Lane',
-      loyaltyPoints: 320,
+    await Customer.findOrCreate({
+      where: { name: 'Carol Clark' },
+      defaults: { email: 'carol@example.com', phone: '555-2003', address: '103 Customer Lane', loyaltyPoints: 320 },
     });
 
-    await Customer.create({
-      name: 'David Davis',
-      email: 'david@example.com',
-      phone: '555-2004',
-      address: '104 Customer Lane',
-      loyaltyPoints: 10,
+    await Customer.findOrCreate({
+      where: { name: 'David Davis' },
+      defaults: { email: 'david@example.com', phone: '555-2004', address: '104 Customer Lane', loyaltyPoints: 10 },
     });
 
     console.log('Customers created.');
