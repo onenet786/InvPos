@@ -52,7 +52,7 @@ case "$1" in
 
     log "Deployment complete!"
     echo ""
-    echo "  Frontend:  http://localhost:${FRONTEND_PORT:-3000}"
+    echo "  Frontend:  http://localhost:${FRONTEND_PORT:-3021}"
     echo "  Backend:   http://localhost:5005/api"
     echo "  Health:    http://localhost:5005/api/health"
     echo ""

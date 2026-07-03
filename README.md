@@ -595,7 +595,7 @@ DB_NAME=invpos
 DB_USER=invpos
 DB_PASSWORD=your_strong_password
 VITE_API_URL=http://your-domain.com/api
-FRONTEND_PORT=3000
+FRONTEND_PORT=3021
 ```
 
 The backend also reads from `backend/.env` (via `env_file` in docker-compose). Both files are loaded — `backend/.env` for app-specific secrets (JWT, CORS), and root `.env` for Docker infrastructure settings.
@@ -604,7 +604,7 @@ The backend also reads from `backend/.env` (via `env_file` in docker-compose). B
 
 - Ports `5432` (PostgreSQL) and `5005` (Backend) are bound to `127.0.0.1` only — not exposed publicly
 - Use Nginx reverse proxy (see Step 7 in aaPanel section above) to serve the frontend and proxy `/api/` to `127.0.0.1:5005`
-- The `FRONTEND_PORT` can be changed in `.env` if port 3000 is in use
+- The `FRONTEND_PORT` can be changed in `.env` if port 3021 is in use
 
 #### Auto-Update with Cron (Optional)
 
@@ -637,7 +637,7 @@ npm run dev
 ```
 
 Access:
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:3021
 - Backend API: http://localhost:5005/api
 
 ## Demo Credentials
