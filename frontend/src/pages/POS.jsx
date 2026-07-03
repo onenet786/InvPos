@@ -15,6 +15,8 @@ import {
   Smartphone,
   Receipt,
   Loader2,
+  Flame,
+  Package,
 } from 'lucide-react';
 
 export default function POS() {
@@ -34,6 +36,8 @@ export default function POS() {
   const [loading, setLoading] = useState(false);
   const [receipt, setReceipt] = useState(null);
   const [error, setError] = useState('');
+  const [topProducts, setTopProducts] = useState([]);
+  const [loadingTop, setLoadingTop] = useState(false);
   const searchRef = useRef(null);
 
   const debouncedSearch = useRef(null);
@@ -57,6 +61,11 @@ export default function POS() {
 
   useEffect(() => {
     searchRef.current?.focus();
+    setLoadingTop(true);
+    api.get('/products/top-selling?limit=15')
+      .then(({ data }) => setTopProducts(data.data || []))
+      .catch(() => setTopProducts([]))
+      .finally(() => setLoadingTop(false));
   }, []);
 
   const addToCart = useCallback((product) => {
@@ -266,6 +275,47 @@ export default function POS() {
                   </div>
                 </button>
               ))}
+            </div>
+          )}
+
+          {/* Hot / Most Selling Items — shown when no search active */}
+          {searchQuery.trim() === '' && (
+            <div className="mt-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Flame className="w-4 h-4 text-orange-500" />
+                <h3 className="text-sm font-semibold text-gray-700">Hot / Most Selling Items</h3>
+                {loadingTop && <Loader2 className="w-3.5 h-3.5 text-gray-400 animate-spin" />}
+              </div>
+              {topProducts.length > 0 ? (
+                <div className="grid grid-cols-5 gap-2">
+                  {topProducts.map((product, idx) => (
+                    <button
+                      key={product.id}
+                      onClick={() => addToCart(product)}
+                      className="group relative bg-white border border-gray-200 rounded-xl p-3 hover:border-primary-400 hover:shadow-md transition-all text-left flex flex-col items-center justify-between min-h-[110px]"
+                    >
+                      {idx < 3 && (
+                        <span className={`absolute -top-2 -left-2 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-orange-400' : 'bg-orange-300'}`}>
+                          {idx + 1}
+                        </span>
+                      )}
+                      <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center mb-1.5">
+                        <Package className="w-5 h-5 text-primary-500" />
+                      </div>
+                      <p className="text-xs font-medium text-gray-800 text-center line-clamp-2 leading-tight">{product.name}</p>
+                      <div className="w-full flex items-center justify-between mt-1.5">
+                        <span className="text-sm font-bold text-primary-600">${parseFloat(product.salePrice).toFixed(2)}</span>
+                        <span className="text-[10px] text-gray-400">{product.totalSold} sold</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : !loadingTop ? (
+                <div className="text-center py-6 text-gray-400 text-sm border border-dashed border-gray-200 rounded-xl">
+                  <Flame className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                  No sales data yet. Hot items will appear here after sales are made.
+                </div>
+              ) : null}
             </div>
           )}
         </div>

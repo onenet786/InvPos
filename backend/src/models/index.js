@@ -20,6 +20,7 @@ const { StockTransfer, StockTransferItem } = require('./StockTransfer');
 const AuditLog = require('./AuditLog');
 const { SaleReturn, SaleReturnItem } = require('./SaleReturn');
 const { PurchaseReturn, PurchaseReturnItem } = require('./PurchaseReturn');
+const Settings = require('./Settings');
 
 // --- Associations ---
 
@@ -166,4 +167,5 @@ module.exports = {
   SaleReturnItem,
   PurchaseReturn,
   PurchaseReturnItem,
+  Settings,
 };

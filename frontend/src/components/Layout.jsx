@@ -14,6 +14,7 @@ import {
   ScrollText,
   LogOut,
   Store,
+  Settings,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -29,6 +30,7 @@ const navItems = [
   { to: '/reports', label: 'Reports', icon: BarChart3, roles: ['admin', 'manager'] },
   { to: '/users', label: 'Users', icon: UserCog, roles: ['admin'] },
   { to: '/audit-logs', label: 'Audit Logs', icon: ScrollText, roles: ['admin'] },
+  { to: '/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
 ];
 
 export default function Layout({ children }) {

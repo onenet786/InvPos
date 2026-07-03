@@ -14,6 +14,7 @@ import Customers from './pages/Customers';
 import Reports from './pages/Reports';
 import Users from './pages/Users';
 import AuditLogs from './pages/AuditLogs';
+import Settings from './pages/Settings';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -46,6 +47,7 @@ export default function App() {
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/audit-logs" element={<AuditLogs />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>
           </ProtectedRoute>

@@ -1,8 +1,9 @@
-const { Product, Category, Stock, ProductBatch } = require('../models');
+const { Product, Category, Stock, ProductBatch, SaleItem, Sale } = require('../models');
 const { logAudit } = require('../middleware/auditLog');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { generateBarcode } = require('../utils/generators');
 const { Op } = require('sequelize');
+const { sequelize } = require('../models');
 
 exports.list = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page, 10) || 1;
@@ -175,4 +176,46 @@ exports.generateBarcode = asyncHandler(async (req, res) => {
   await logAudit(req, 'generate_barcode', 'product', product.id, oldValues, { barcode });
 
   res.json({ barcode });
+});
+
+exports.topSelling = asyncHandler(async (req, res) => {
+  const limit = parseInt(req.query.limit, 10) || 15;
+  const branchId = req.query.branchId || (req.branch && req.branch.id);
+
+  const saleWhere = {
+    status: { [Op.in]: ['completed', 'partially_returned'] },
+  };
+  if (branchId) saleWhere.branchId = branchId;
+
+  const results = await SaleItem.findAll({
+    attributes: [
+      'productId',
+      [sequelize.fn('SUM', sequelize.col('SaleItem.quantity')), 'totalSold'],
+    ],
+    include: [
+      {
+        model: Sale,
+        as: 'Sale',
+        where: saleWhere,
+        attributes: [],
+      },
+      {
+        model: Product,
+        as: 'Product',
+        attributes: ['id', 'name', 'sku', 'barcode', 'salePrice', 'costPrice', 'taxRate'],
+        include: [{ model: Stock, as: 'Stock' }],
+      },
+    ],
+    group: ['SaleItem.productId', 'Product.id', 'Product->Stock.id'],
+    order: [[sequelize.literal('"totalSold"'), 'DESC']],
+    limit,
+    raw: false,
+  });
+
+  const data = results.map((r) => ({
+    ...r.Product.toJSON(),
+    totalSold: parseInt(r.dataValues.totalSold, 10),
+  }));
+
+  res.json({ data });
 });

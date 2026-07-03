@@ -8,6 +8,7 @@ router.use(auth);
 
 router.get('/', productController.list);
 router.get('/search', productController.search);
+router.get('/top-selling', productController.topSelling);
 router.get('/low-stock', productController.getLowStock);
 router.get('/:id', productController.getById);
 router.post('/', checkRole(['admin', 'manager', 'inventory_staff']), productController.create);
