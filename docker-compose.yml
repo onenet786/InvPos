@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: invpos_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-invpos}
+      POSTGRES_USER: ${DB_USER:-invpos}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-invpos_secret}
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-invpos}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: invpos_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 5000
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - '127.0.0.1:5000:5000'
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/.env:/app/.env:ro
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5000/api}
+    container_name: invpos_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - '${FRONTEND_PORT:-3000}:80'
+
+volumes:
+  pgdata:
