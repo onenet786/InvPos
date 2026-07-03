@@ -3,6 +3,7 @@ const path = require('path');
 
 let splashWindow;
 let mainWindow;
+let createWindowTimer = null;
 
 function createSplash() {
   splashWindow = new BrowserWindow({
@@ -25,6 +26,13 @@ function createSplash() {
   splashWindow.on('closed', () => {
     splashWindow = null;
   });
+}
+
+function closeSplash() {
+  if (splashWindow && !splashWindow.isDestroyed()) {
+    splashWindow.destroy();
+    splashWindow = null;
+  }
 }
 
 function createWindow() {
@@ -61,11 +69,15 @@ function createWindow() {
 
   // When the main window is ready, close splash and show main
   mainWindow.once('ready-to-show', () => {
-    if (splashWindow && !splashWindow.isDestroyed()) {
-      splashWindow.close();
-    }
+    closeSplash();
     mainWindow.show();
     mainWindow.focus();
+  });
+
+  // If main window fails to load, close splash and quit
+  mainWindow.webContents.on('did-fail-load', () => {
+    closeSplash();
+    app.quit();
   });
 
   // Open external links in browser, not in Electron
@@ -76,13 +88,19 @@ function createWindow() {
 
   // Remove menu bar for POS-style kiosk feel
   Menu.setApplicationMenu(null);
+
+  // Clean up timer reference
+  if (createWindowTimer) {
+    clearTimeout(createWindowTimer);
+    createWindowTimer = null;
+  }
 }
 
 app.whenReady().then(() => {
   createSplash();
 
   // Show splash for 2.5 seconds then create main window
-  setTimeout(() => {
+  createWindowTimer = setTimeout(() => {
     createWindow();
   }, 2500);
 
@@ -93,8 +111,22 @@ app.whenReady().then(() => {
   });
 });
 
+// Ensure all windows are destroyed before quitting
 app.on('window-all-closed', () => {
+  closeSplash();
+  if (createWindowTimer) {
+    clearTimeout(createWindowTimer);
+    createWindowTimer = null;
+  }
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+// Force quit if something prevents normal shutdown
+app.on('before-quit', () => {
+  closeSplash();
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.destroy();
   }
 });

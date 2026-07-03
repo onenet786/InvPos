@@ -13,7 +13,8 @@
     "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:3021 && cross-env ELECTRON_IS_DEV=1 electron electron/main.cjs\"",
     "electron:build": "vite build && electron-builder --win",
     "electron:build:portable": "vite build && electron-builder --win portable",
-    "dist": "vite build && electron-builder --win nsis"
+    "preclean": "node electron/preclean.cjs",
+    "dist": "npm run preclean && vite build && electron-builder --win nsis"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -43,7 +44,7 @@
     "appId": "com.invpos.pos",
     "productName": "InvPos POS",
     "directories": {
-      "output": "release-v4",
+      "output": "release",
       "buildResources": "build"
     },
     "files": [
