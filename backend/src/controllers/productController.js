@@ -237,7 +237,12 @@ exports.toggleHotItem = asyncHandler(async (req, res) => {
 
   const oldValues = product.toJSON();
   const isHotItem = !product.isHotItem;
-  const hotItemOrder = isHotItem ? (req.body.order || Date.now()) : 0;
+
+  let hotItemOrder = 0;
+  if (isHotItem) {
+    const maxOrder = await Product.max('hotItemOrder', { where: { isHotItem: true } });
+    hotItemOrder = (maxOrder || 0) + 1;
+  }
 
   await product.update({ isHotItem, hotItemOrder });
   await logAudit(req, 'toggle_hot_item', 'product', product.id, oldValues, { isHotItem, hotItemOrder });
