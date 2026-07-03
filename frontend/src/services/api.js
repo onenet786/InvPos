@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const isElectron = window.location.protocol === 'file:';
+const API_URL = import.meta.env.VITE_API_URL || (isElectron ? 'https://invpos.binishaqsoft.com/api' : '/api');
 
 const api = axios.create({
   baseURL: API_URL,
