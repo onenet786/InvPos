@@ -78,9 +78,9 @@ export default function Reports() {
         <div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="card"><p className="text-sm text-gray-500">Total Sales</p><p className="text-2xl font-bold">{data.summary.totalSales}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Revenue</p><p className="text-2xl font-bold text-green-600">${data.summary.totalRevenue.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Tax Collected</p><p className="text-2xl font-bold">${data.summary.totalTax.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Avg Sale Value</p><p className="text-2xl font-bold">${data.summary.avgSaleValue.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Revenue</p><p className="text-2xl font-bold text-green-600">Rs.{data.summary.totalRevenue.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Tax Collected</p><p className="text-2xl font-bold">Rs.{data.summary.totalTax.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Avg Sale Value</p><p className="text-2xl font-bold">Rs.{data.summary.avgSaleValue.toFixed(2)}</p></div>
           </div>
           <div className="card overflow-x-auto p-0">
             <table className="w-full">
@@ -92,7 +92,7 @@ export default function Reports() {
                   <tr key={s.id}>
                     <td className="table-cell font-mono text-xs">{s.saleNumber}</td>
                     <td className="table-cell">{new Date(s.saleDate).toLocaleString()}</td>
-                    <td className="table-cell text-right font-medium">${parseFloat(s.total).toFixed(2)}</td>
+                    <td className="table-cell text-right font-medium">Rs.{parseFloat(s.total).toFixed(2)}</td>
                     <td className="table-cell"><span className="badge bg-green-100 text-green-700">{s.status}</span></td>
                   </tr>
                 ))}
@@ -103,9 +103,9 @@ export default function Reports() {
       ) : tab === 'profit' ? (
         <div>
           <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="card"><p className="text-sm text-gray-500">Revenue</p><p className="text-2xl font-bold">${data.summary.totalRevenue.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Cost</p><p className="text-2xl font-bold text-red-600">${data.summary.totalCost.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Profit</p><p className="text-2xl font-bold text-green-600">${data.summary.totalProfit.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Revenue</p><p className="text-2xl font-bold">Rs.{data.summary.totalRevenue.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Cost</p><p className="text-2xl font-bold text-red-600">Rs.{data.summary.totalCost.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Profit</p><p className="text-2xl font-bold text-green-600">Rs.{data.summary.totalProfit.toFixed(2)}</p></div>
           </div>
           <div className="card overflow-x-auto p-0">
             <table className="w-full">
@@ -117,9 +117,9 @@ export default function Reports() {
                   <tr key={p.productId}>
                     <td className="table-cell font-medium">{p.productName}</td>
                     <td className="table-cell text-center">{p.quantitySold}</td>
-                    <td className="table-cell text-right">${p.revenue.toFixed(2)}</td>
-                    <td className="table-cell text-right">${p.cost.toFixed(2)}</td>
-                    <td className="table-cell text-right font-medium text-green-600">${p.profit.toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{p.revenue.toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{p.cost.toFixed(2)}</td>
+                    <td className="table-cell text-right font-medium text-green-600">Rs.{p.profit.toFixed(2)}</td>
                     <td className="table-cell text-right">{p.margin.toFixed(1)}%</td>
                   </tr>
                 ))}
@@ -130,9 +130,9 @@ export default function Reports() {
       ) : tab === 'stock-valuation' ? (
         <div>
           <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="card"><p className="text-sm text-gray-500">Total Cost Value</p><p className="text-2xl font-bold">${data.summary.totalCostValue.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Total Retail Value</p><p className="text-2xl font-bold">${data.summary.totalRetailValue.toFixed(2)}</p></div>
-            <div className="card"><p className="text-sm text-gray-500">Potential Profit</p><p className="text-2xl font-bold text-green-600">${data.summary.potentialProfit.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Total Cost Value</p><p className="text-2xl font-bold">Rs.{data.summary.totalCostValue.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Total Retail Value</p><p className="text-2xl font-bold">Rs.{data.summary.totalRetailValue.toFixed(2)}</p></div>
+            <div className="card"><p className="text-sm text-gray-500">Potential Profit</p><p className="text-2xl font-bold text-green-600">Rs.{data.summary.potentialProfit.toFixed(2)}</p></div>
           </div>
           <div className="card overflow-x-auto p-0">
             <table className="w-full">
@@ -144,8 +144,8 @@ export default function Reports() {
                   <tr key={i.productId}>
                     <td className="table-cell font-medium">{i.productName}</td>
                     <td className="table-cell text-center">{i.quantity}</td>
-                    <td className="table-cell text-right">${i.costValue.toFixed(2)}</td>
-                    <td className="table-cell text-right">${i.retailValue.toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{i.costValue.toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{i.retailValue.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -172,9 +172,9 @@ export default function Reports() {
                   <td className="table-cell font-medium">{p.productName}</td>
                   <td className="table-cell font-mono text-xs">{p.sku}</td>
                   {tab === 'best-selling' ? (
-                    <><td className="table-cell text-center">{p.quantitySold}</td><td className="table-cell text-right">${p.revenue.toFixed(2)}</td></>
+                    <><td className="table-cell text-center">{p.quantitySold}</td><td className="table-cell text-right">Rs.{p.revenue.toFixed(2)}</td></>
                   ) : (
-                    <><td className="table-cell text-center">{p.stockQuantity}</td><td className="table-cell text-right">${p.stockValue.toFixed(2)}</td></>
+                    <><td className="table-cell text-center">{p.stockQuantity}</td><td className="table-cell text-right">Rs.{p.stockValue.toFixed(2)}</td></>
                   )}
                 </tr>
               ))}
@@ -198,9 +198,9 @@ export default function Reports() {
                 <tr key={c.cashierId}>
                   <td className="table-cell font-medium">{c.cashierName}</td>
                   <td className="table-cell text-center">{c.totalSales}</td>
-                  <td className="table-cell text-right font-medium">${c.totalRevenue.toFixed(2)}</td>
-                  <td className="table-cell text-right">${c.paymentBreakdown.cash.toFixed(2)}</td>
-                  <td className="table-cell text-right">${c.paymentBreakdown.card.toFixed(2)}</td>
+                  <td className="table-cell text-right font-medium">Rs.{c.totalRevenue.toFixed(2)}</td>
+                  <td className="table-cell text-right">Rs.{c.paymentBreakdown.cash.toFixed(2)}</td>
+                  <td className="table-cell text-right">Rs.{c.paymentBreakdown.card.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

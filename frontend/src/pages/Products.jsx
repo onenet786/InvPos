@@ -129,8 +129,8 @@ export default function Products() {
                 <td className="table-cell font-mono text-xs">{p.sku}</td>
                 <td className="table-cell font-medium">{p.name}</td>
                 <td className="table-cell">{p.Category?.name || '-'}</td>
-                <td className="table-cell text-right">${parseFloat(p.costPrice).toFixed(2)}</td>
-                <td className="table-cell text-right font-medium">${parseFloat(p.salePrice).toFixed(2)}</td>
+                <td className="table-cell text-right">Rs.{parseFloat(p.costPrice).toFixed(2)}</td>
+                <td className="table-cell text-right font-medium">Rs.{parseFloat(p.salePrice).toFixed(2)}</td>
                 <td className="table-cell text-right">{parseFloat(p.taxRate).toFixed(1)}%</td>
                 <td className="table-cell text-center">{p.reorderThreshold}</td>
                 <td className="table-cell text-center">

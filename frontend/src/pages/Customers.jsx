@@ -92,7 +92,7 @@ export default function Customers() {
                     {c.loyaltyPoints}
                   </span>
                 </td>
-                <td className="table-cell text-right">${parseFloat(c.creditBalance).toFixed(2)}</td>
+                <td className="table-cell text-right">Rs.{parseFloat(c.creditBalance).toFixed(2)}</td>
                 <td className="table-cell">
                   <div className="flex gap-2">
                     <button onClick={() => viewCustomer(c.id)} className="text-primary-600 hover:text-primary-800"><Eye className="w-4 h-4" /></button>
@@ -149,7 +149,7 @@ export default function Customers() {
               <div><span className="text-gray-500">Phone:</span> {viewing.customer.phone || '-'}</div>
               <div><span className="text-gray-500">Email:</span> {viewing.customer.email || '-'}</div>
               <div><span className="text-gray-500">Loyalty Points:</span> {viewing.customer.loyaltyPoints}</div>
-              <div><span className="text-gray-500">Credit Balance:</span> ${parseFloat(viewing.customer.creditBalance).toFixed(2)}</div>
+              <div><span className="text-gray-500">Credit Balance:</span> Rs.{parseFloat(viewing.customer.creditBalance).toFixed(2)}</div>
             </div>
             <h3 className="font-medium mb-2">Purchase History</h3>
             <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -162,7 +162,7 @@ export default function Customers() {
                       <p className="font-medium">{sale.saleNumber}</p>
                       <p className="text-xs text-gray-500">{new Date(sale.saleDate).toLocaleDateString()}</p>
                     </div>
-                    <span className="font-medium">${parseFloat(sale.total).toFixed(2)}</span>
+                    <span className="font-medium">Rs.{parseFloat(sale.total).toFixed(2)}</span>
                   </div>
                 ))
               )}

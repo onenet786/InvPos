@@ -212,7 +212,7 @@ export default function Settings() {
                   value={settings.currencySymbol || ''}
                   onChange={(e) => setSettings({ ...settings, currencySymbol: e.target.value })}
                   className="input"
-                  placeholder="$"
+                  placeholder="Rs."
                 />
               </div>
               <div>
@@ -222,7 +222,7 @@ export default function Settings() {
                   value={settings.currencyCode || ''}
                   onChange={(e) => setSettings({ ...settings, currencyCode: e.target.value })}
                   className="input"
-                  placeholder="USD"
+                  placeholder="PKR"
                 />
               </div>
               <div>
@@ -261,7 +261,7 @@ export default function Settings() {
               <div className="mt-3">
                 <label className="text-sm font-medium text-gray-700 mb-1 block flex items-center gap-1">
                   <Award className="w-4 h-4" />
-                  Loyalty Points per {settings.currencySymbol || '$'}1
+                  Loyalty Points per {settings.currencySymbol || 'Rs.'}1
                 </label>
                 <input
                   type="number"

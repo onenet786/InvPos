@@ -133,7 +133,7 @@ export default function PurchaseOrders() {
                 <td className="table-cell">
                   <span className={`badge ${statusColors[po.status]}`}>{po.status.replace('_', ' ')}</span>
                 </td>
-                <td className="table-cell text-right font-medium">${parseFloat(po.total).toFixed(2)}</td>
+                <td className="table-cell text-right font-medium">Rs.{parseFloat(po.total).toFixed(2)}</td>
                 <td className="table-cell">{new Date(po.orderDate).toLocaleDateString()}</td>
                 <td className="table-cell">
                   <div className="flex gap-2">
@@ -249,7 +249,7 @@ export default function PurchaseOrders() {
               <div><span className="text-gray-500">Supplier:</span> {viewing.Supplier?.name}</div>
               <div><span className="text-gray-500">Order Date:</span> {new Date(viewing.orderDate).toLocaleDateString()}</div>
               <div><span className="text-gray-500">Expected:</span> {viewing.expectedDate ? new Date(viewing.expectedDate).toLocaleDateString() : '-'}</div>
-              <div><span className="text-gray-500">Total:</span> ${parseFloat(viewing.total).toFixed(2)}</div>
+              <div><span className="text-gray-500">Total:</span> Rs.{parseFloat(viewing.total).toFixed(2)}</div>
             </div>
             <table className="w-full text-sm">
               <thead className="bg-gray-50">
@@ -267,8 +267,8 @@ export default function PurchaseOrders() {
                     <td className="table-cell">{item.Product?.name}</td>
                     <td className="table-cell text-center">{item.quantityOrdered}</td>
                     <td className="table-cell text-center">{item.quantityReceived}</td>
-                    <td className="table-cell text-right">${parseFloat(item.unitCost).toFixed(2)}</td>
-                    <td className="table-cell text-right">${parseFloat(item.total).toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{parseFloat(item.unitCost).toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{parseFloat(item.total).toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>

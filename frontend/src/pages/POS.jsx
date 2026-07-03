@@ -268,7 +268,7 @@ export default function POS() {
                     <p className="text-xs text-gray-500">SKU: {product.sku} | {product.barcode}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-primary-600">${parseFloat(product.salePrice).toFixed(2)}</p>
+                    <p className="font-bold text-primary-600">Rs.{parseFloat(product.salePrice).toFixed(2)}</p>
                     <p className="text-xs text-gray-500">
                       Stock: {product.Stock?.[0]?.quantity || 0}
                     </p>
@@ -304,7 +304,7 @@ export default function POS() {
                       </div>
                       <p className="text-xs font-medium text-gray-800 text-center line-clamp-2 leading-tight">{product.name}</p>
                       <div className="w-full flex items-center justify-between mt-1.5">
-                        <span className="text-sm font-bold text-primary-600">${parseFloat(product.salePrice).toFixed(2)}</span>
+                        <span className="text-sm font-bold text-primary-600">Rs.{parseFloat(product.salePrice).toFixed(2)}</span>
                         <span className="text-[10px] text-gray-400">{product.totalSold} sold</span>
                       </div>
                     </button>
@@ -357,7 +357,7 @@ export default function POS() {
                         </button>
                       </div>
                     </td>
-                    <td className="table-cell text-right">${item.unitPrice.toFixed(2)}</td>
+                    <td className="table-cell text-right">Rs.{item.unitPrice.toFixed(2)}</td>
                     <td className="table-cell text-right">
                       <input
                         type="number"
@@ -438,7 +438,7 @@ export default function POS() {
               onChange={(e) => setDiscountType(e.target.value)}
               className="input w-24"
             >
-              <option value="amount">$</option>
+              <option value="amount">Rs.</option>
               <option value="percentage">%</option>
             </select>
           </div>
@@ -448,27 +448,27 @@ export default function POS() {
         <div className="space-y-2 py-4 border-t border-gray-200">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Subtotal</span>
-            <span className="font-medium">${subtotal.toFixed(2)}</span>
+            <span className="font-medium">Rs.{subtotal.toFixed(2)}</span>
           </div>
           {itemDiscounts > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Item Discounts</span>
-              <span className="font-medium text-red-600">-${itemDiscounts.toFixed(2)}</span>
+              <span className="font-medium text-red-600">-Rs.{itemDiscounts.toFixed(2)}</span>
             </div>
           )}
           {cartDiscountAmount > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Cart Discount</span>
-              <span className="font-medium text-red-600">-${cartDiscountAmount.toFixed(2)}</span>
+              <span className="font-medium text-red-600">-Rs.{cartDiscountAmount.toFixed(2)}</span>
             </div>
           )}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Tax</span>
-            <span className="font-medium">${tax.toFixed(2)}</span>
+            <span className="font-medium">Rs.{tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-200">
             <span>Total</span>
-            <span className="text-primary-600">${total.toFixed(2)}</span>
+            <span className="text-primary-600">Rs.{total.toFixed(2)}</span>
           </div>
         </div>
 
@@ -482,7 +482,7 @@ export default function POS() {
             className="btn-primary w-full flex items-center justify-center gap-2 text-lg py-3"
           >
             <DollarSign className="w-5 h-5" />
-            Checkout (${total.toFixed(2)})
+            Checkout (Rs.{total.toFixed(2)})
           </button>
           <div className="flex gap-2">
             <button
@@ -518,7 +518,7 @@ export default function POS() {
             <div className="mb-4 p-4 bg-primary-50 rounded-xl">
               <div className="flex justify-between text-2xl font-bold">
                 <span>Total Due</span>
-                <span className="text-primary-600">${total.toFixed(2)}</span>
+                <span className="text-primary-600">Rs.{total.toFixed(2)}</span>
               </div>
             </div>
 
@@ -572,12 +572,12 @@ export default function POS() {
             <div className="space-y-2 py-3 border-t border-gray-200">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Total Paid</span>
-                <span className="font-medium">${totalPaid.toFixed(2)}</span>
+                <span className="font-medium">Rs.{totalPaid.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span>Change</span>
                 <span className={change >= 0 ? 'text-green-600' : 'text-red-600'}>
-                  ${Math.abs(change).toFixed(2)}
+                  Rs.{Math.abs(change).toFixed(2)}
                 </span>
               </div>
             </div>
@@ -616,7 +616,7 @@ export default function POS() {
                   >
                     <div className="flex justify-between">
                       <span className="font-medium">{sale.saleNumber}</span>
-                      <span className="font-bold text-primary-600">${parseFloat(sale.total).toFixed(2)}</span>
+                      <span className="font-bold text-primary-600">Rs.{parseFloat(sale.total).toFixed(2)}</span>
                     </div>
                     <p className="text-xs text-gray-500">
                       {new Date(sale.heldAt).toLocaleString()} | {sale.items?.length || 0} items
@@ -647,15 +647,15 @@ export default function POS() {
               </div>
               <div className="flex justify-between mb-1">
                 <span className="text-gray-600">Total</span>
-                <span className="font-medium">${parseFloat(receipt.total).toFixed(2)}</span>
+                <span className="font-medium">Rs.{parseFloat(receipt.total).toFixed(2)}</span>
               </div>
               <div className="flex justify-between mb-1">
                 <span className="text-gray-600">Paid</span>
-                <span className="font-medium">${parseFloat(receipt.paidAmount).toFixed(2)}</span>
+                <span className="font-medium">Rs.{parseFloat(receipt.paidAmount).toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Change</span>
-                <span className="font-medium">${parseFloat(receipt.changeAmount).toFixed(2)}</span>
+                <span className="font-medium">Rs.{parseFloat(receipt.changeAmount).toFixed(2)}</span>
               </div>
             </div>
 
@@ -663,7 +663,7 @@ export default function POS() {
               {receipt.items?.map((item) => (
                 <div key={item.id} className="flex justify-between text-sm">
                   <span>{item.quantity}x {item.Product?.name}</span>
-                  <span>${parseFloat(item.total).toFixed(2)}</span>
+                  <span>Rs.{parseFloat(item.total).toFixed(2)}</span>
                 </div>
               ))}
             </div>

@@ -68,7 +68,7 @@ export default function Sales() {
                 <td className="table-cell">
                   <span className={`badge ${statusColors[s.status]}`}>{s.status.replace('_', ' ')}</span>
                 </td>
-                <td className="table-cell text-right font-medium">${parseFloat(s.total).toFixed(2)}</td>
+                <td className="table-cell text-right font-medium">Rs.{parseFloat(s.total).toFixed(2)}</td>
                 <td className="table-cell">
                   <button onClick={() => viewSale(s.id)} className="text-primary-600 hover:text-primary-800">
                     <Eye className="w-4 h-4" />
@@ -106,21 +106,21 @@ export default function Sales() {
               {viewing.items?.map((item) => (
                 <div key={item.id} className="flex justify-between text-sm">
                   <span>{item.quantity}x {item.Product?.name}</span>
-                  <span>${parseFloat(item.total).toFixed(2)}</span>
+                  <span>Rs.{parseFloat(item.total).toFixed(2)}</span>
                 </div>
               ))}
             </div>
             <div className="border-t border-gray-200 mt-3 pt-3 space-y-1 text-sm">
-              <div className="flex justify-between"><span className="text-gray-500">Subtotal</span><span>${parseFloat(viewing.subtotal).toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Discount</span><span>-${parseFloat(viewing.discount).toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Tax</span><span>${parseFloat(viewing.tax).toFixed(2)}</span></div>
-              <div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-primary-600">${parseFloat(viewing.total).toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">Subtotal</span><span>Rs.{parseFloat(viewing.subtotal).toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">Discount</span><span>-Rs.{parseFloat(viewing.discount).toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">Tax</span><span>Rs.{parseFloat(viewing.tax).toFixed(2)}</span></div>
+              <div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-primary-600">Rs.{parseFloat(viewing.total).toFixed(2)}</span></div>
             </div>
             <div className="mt-3 space-y-1">
               {viewing.payments?.map((p) => (
                 <div key={p.id} className="flex justify-between text-sm">
                   <span className="text-gray-500 capitalize">{p.method.replace('_', ' ')}</span>
-                  <span>${parseFloat(p.amount).toFixed(2)}</span>
+                  <span>Rs.{parseFloat(p.amount).toFixed(2)}</span>
                 </div>
               ))}
             </div>

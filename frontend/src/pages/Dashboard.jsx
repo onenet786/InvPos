@@ -43,12 +43,12 @@ export default function Dashboard() {
   }, []);
 
   const cards = [
-    { label: "Today's Sales", value: `$${stats.todaySales.toFixed(2)}`, icon: DollarSign, color: 'bg-green-500' },
+    { label: "Today's Sales", value: `Rs.${stats.todaySales.toFixed(2)}`, icon: DollarSign, color: 'bg-green-500' },
     { label: "Today's Transactions", value: stats.todayCount, icon: ShoppingCart, color: 'bg-blue-500' },
     { label: 'Total Products', value: stats.totalProducts, icon: Package, color: 'bg-purple-500' },
     { label: 'Low Stock Alerts', value: stats.lowStockCount, icon: AlertTriangle, color: 'bg-orange-500' },
     { label: 'Total Customers', value: stats.totalCustomers, icon: Users, color: 'bg-indigo-500' },
-    { label: 'Monthly Revenue', value: `$${stats.monthlyRevenue.toFixed(2)}`, icon: TrendingUp, color: 'bg-teal-500' },
+    { label: 'Monthly Revenue', value: `Rs.${stats.monthlyRevenue.toFixed(2)}`, icon: TrendingUp, color: 'bg-teal-500' },
   ];
 
   return (
