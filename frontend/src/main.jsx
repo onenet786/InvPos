@@ -17,3 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Router>
   </React.StrictMode>
 );
+
+requestAnimationFrame(() => {
+  const splash = document.getElementById('web-splash');
+  if (splash) {
+    splash.classList.add('hide');
+    setTimeout(() => splash.remove(), 600);
+  }
+});
