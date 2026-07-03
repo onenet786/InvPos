@@ -297,7 +297,7 @@ nano .env
 **`.env` configuration:**
 ```env
 NODE_ENV=production
-PORT=5000
+PORT=5005
 
 DB_HOST=127.0.0.1
 DB_PORT=5432
@@ -357,7 +357,7 @@ pm2 startup
 
 Verify the backend is running:
 ```bash
-curl http://127.0.0.1:5000/api/health
+curl http://127.0.0.1:5005/api/health
 # Should return: { "status": "ok", ... }
 ```
 
@@ -417,7 +417,7 @@ server {
 
     # Reverse proxy for API requests
     location /api/ {
-        proxy_pass http://127.0.0.1:5000/api/;
+        proxy_pass http://127.0.0.1:5005/api/;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -460,10 +460,10 @@ Ensure these ports are open in aaPanel → **Security**:
 |------|---------|--------|
 | 80 | HTTP | Public |
 | 443 | HTTPS | Public |
-| 5000 | Node.js Backend | **Local only** (127.0.0.1) |
+| 5005 | Node.js Backend | **Local only** (127.0.0.1) |
 | 5432 | PostgreSQL | **Local only** (127.0.0.1) |
 
-> **Important:** Never expose ports 5000 or 5432 to the public. The Nginx reverse proxy handles API access via port 80/443.
+> **Important:** Never expose ports 5005 or 5432 to the public. The Nginx reverse proxy handles API access via port 80/443.
 
 ### Post-Deployment Verification
 
@@ -473,10 +473,10 @@ pm2 status
 pm2 logs invpos-backend --lines 20
 
 # Test API health
-curl http://127.0.0.1:5000/api/health
+curl http://127.0.0.1:5005/api/health
 
 # Test login
-curl -X POST http://127.0.0.1:5000/api/auth/login \
+curl -X POST http://127.0.0.1:5005/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}'
 
@@ -602,8 +602,8 @@ The backend also reads from `backend/.env` (via `env_file` in docker-compose). B
 
 #### Security Notes for Docker Deployment
 
-- Ports `5432` (PostgreSQL) and `5000` (Backend) are bound to `127.0.0.1` only — not exposed publicly
-- Use Nginx reverse proxy (see Step 7 in aaPanel section above) to serve the frontend and proxy `/api/` to `127.0.0.1:5000`
+- Ports `5432` (PostgreSQL) and `5005` (Backend) are bound to `127.0.0.1` only — not exposed publicly
+- Use Nginx reverse proxy (see Step 7 in aaPanel section above) to serve the frontend and proxy `/api/` to `127.0.0.1:5005`
 - The `FRONTEND_PORT` can be changed in `.env` if port 3000 is in use
 
 #### Auto-Update with Cron (Optional)
@@ -638,7 +638,7 @@ npm run dev
 
 Access:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000/api
+- Backend API: http://localhost:5005/api
 
 ## Demo Credentials
 

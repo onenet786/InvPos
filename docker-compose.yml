@@ -32,11 +32,11 @@ services:
       - ./backend/.env
     environment:
       NODE_ENV: ${NODE_ENV:-production}
-      PORT: 5000
+      PORT: 5005
       DB_HOST: db
       DB_PORT: 5432
     ports:
-      - '127.0.0.1:5000:5000'
+      - '127.0.0.1:5005:5005'
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -47,7 +47,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL:-http://localhost:5000/api}
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5005/api}
     container_name: invpos_frontend
     restart: unless-stopped
     depends_on:
