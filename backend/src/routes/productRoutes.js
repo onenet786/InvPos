@@ -9,10 +9,12 @@ router.use(auth);
 router.get('/', productController.list);
 router.get('/search', productController.search);
 router.get('/top-selling', productController.topSelling);
+router.get('/hot-items', productController.hotItems);
 router.get('/low-stock', productController.getLowStock);
 router.get('/:id', productController.getById);
 router.post('/', checkRole(['admin', 'manager', 'inventory_staff']), productController.create);
 router.put('/:id', checkRole(['admin', 'manager', 'inventory_staff']), productController.update);
+router.patch('/:id/toggle-hot', checkRole(['admin', 'manager']), productController.toggleHotItem);
 router.delete('/:id', checkRole(['admin', 'manager']), productController.deactivate);
 router.post('/:id/barcode', checkRole(['admin', 'manager', 'inventory_staff']), productController.generateBarcode);
 

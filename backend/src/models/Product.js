@@ -17,6 +17,8 @@ const Product = sequelize.define(
     reorderThreshold: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 10, field: 'reorder_threshold' },
     hasBatchTracking: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false, field: 'has_batch_tracking' },
     isActive: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true, field: 'is_active' },
+    isHotItem: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false, field: 'is_hot_item' },
+    hotItemOrder: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: 'hot_item_order' },
     imageUrl: { type: DataTypes.STRING(500), field: 'image_url' },
   },
   { tableName: 'products' }

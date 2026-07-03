@@ -219,3 +219,28 @@ exports.topSelling = asyncHandler(async (req, res) => {
 
   res.json({ data });
 });
+
+exports.hotItems = asyncHandler(async (req, res) => {
+  const products = await Product.findAll({
+    where: { isActive: true, isHotItem: true },
+    include: [{ model: Stock, as: 'Stock' }],
+    order: [['hotItemOrder', 'ASC'], ['name', 'ASC']],
+    limit: 15,
+  });
+
+  res.json({ data: products });
+});
+
+exports.toggleHotItem = asyncHandler(async (req, res) => {
+  const product = await Product.findByPk(req.params.id);
+  if (!product) return res.status(404).json({ error: 'Product not found' });
+
+  const oldValues = product.toJSON();
+  const isHotItem = !product.isHotItem;
+  const hotItemOrder = isHotItem ? (req.body.order || Date.now()) : 0;
+
+  await product.update({ isHotItem, hotItemOrder });
+  await logAudit(req, 'toggle_hot_item', 'product', product.id, oldValues, { isHotItem, hotItemOrder });
+
+  res.json({ product, isHotItem });
+});

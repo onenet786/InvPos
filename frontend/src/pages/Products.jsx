@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { Plus, Search, Edit, Trash2, X, Barcode } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, Barcode, Star } from 'lucide-react';
 
 export default function Products() {
   const { hasRole } = useAuth();
@@ -82,6 +82,15 @@ export default function Products() {
     fetchProducts();
   };
 
+  const toggleHotItem = async (id) => {
+    try {
+      await api.patch(`/products/${id}/toggle-hot`);
+      fetchProducts();
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to toggle hot item');
+    }
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -120,6 +129,7 @@ export default function Products() {
               <th className="table-header text-right">Tax%</th>
               <th className="table-header text-center">Reorder</th>
               <th className="table-header text-center">Stock</th>
+              <th className="table-header text-center">Hot</th>
               <th className="table-header">Actions</th>
             </tr>
           </thead>
@@ -135,6 +145,19 @@ export default function Products() {
                 <td className="table-cell text-center">{p.reorderThreshold}</td>
                 <td className="table-cell text-center">
                   {p.Stock?.reduce((sum, s) => sum + s.quantity, 0) || 0}
+                </td>
+                <td className="table-cell text-center">
+                  {canEdit ? (
+                    <button
+                      onClick={() => toggleHotItem(p.id)}
+                      className={`p-1.5 rounded-lg transition-colors ${p.isHotItem ? 'text-yellow-500 bg-yellow-50 hover:bg-yellow-100' : 'text-gray-300 hover:text-yellow-400 hover:bg-yellow-50'}`}
+                      title={p.isHotItem ? 'Remove from hot items' : 'Mark as hot item'}
+                    >
+                      <Star className={`w-4 h-4 ${p.isHotItem ? 'fill-yellow-500' : ''}`} />
+                    </button>
+                  ) : (
+                    p.isHotItem ? <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mx-auto" /> : '-'
+                  )}
                 </td>
                 <td className="table-cell">
                   <div className="flex gap-2">
