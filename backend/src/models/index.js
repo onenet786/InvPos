@@ -44,7 +44,7 @@ Product.hasMany(ProductBatch, { foreignKey: 'product_id' });
 ProductBatch.belongsTo(Product, { foreignKey: 'product_id' });
 
 // Product <-> Stock
-Product.hasMany(Stock, { foreignKey: 'product_id' });
+Product.hasMany(Stock, { foreignKey: 'product_id', as: 'Stock' });
 Stock.belongsTo(Product, { foreignKey: 'product_id' });
 
 // Branch <-> Stock
