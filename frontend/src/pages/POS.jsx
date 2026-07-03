@@ -412,7 +412,7 @@ export default function POS() {
                       />
                     </td>
                     <td className="table-cell text-right font-medium">
-                      ${(item.unitPrice * item.quantity - item.discount).toFixed(2)}
+                      Rs.{(item.unitPrice * item.quantity - item.discount).toFixed(2)}
                     </td>
                     <td className="table-cell">
                       <button onClick={() => removeItem(item.productId)} className="text-red-500 hover:text-red-700">
