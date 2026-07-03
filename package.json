@@ -1,0 +1,16 @@
+{
+  "name": "invpos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Inventory and Point-of-Sale Management System",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "migrate": "npm run migrate --prefix backend",
+    "seed": "npm run seed --prefix backend",
+    "migrate:undo": "npm run migrate:undo --prefix backend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "start:backend": "npm start --prefix backend"
+  }
+}
