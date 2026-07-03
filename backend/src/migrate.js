@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // Simple migration runner that executes SQL files in order
 async function runMigrations(direction = 'up') {
-  const sequelize = require('../config/database');
+  const sequelize = require('./config/database');
   const migrationsDir = path.join(__dirname, 'migrations');
 
   // Ensure migrations table exists
