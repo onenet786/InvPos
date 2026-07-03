@@ -1,4 +1,4 @@
--- Migration: 007_create_customers
+-- Migration: 006_create_customers
 -- Description: Create customers table with loyalty points and credit account
 
 -- UP

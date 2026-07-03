@@ -1,4 +1,4 @@
--- Migration: 006_create_sales
+-- Migration: 007_create_sales
 -- Description: Create sales, sale_items, and payments tables for POS
 
 -- UP
