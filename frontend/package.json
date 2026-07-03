@@ -43,7 +43,7 @@
     "appId": "com.invpos.pos",
     "productName": "InvPos POS",
     "directories": {
-      "output": "release-v3",
+      "output": "release-v4",
       "buildResources": "build"
     },
     "files": [
