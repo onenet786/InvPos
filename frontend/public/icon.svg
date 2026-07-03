@@ -1,0 +1,38 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient circle -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5"/>
+      <stop offset="100%" style="stop-color:#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E0E7FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Rounded square background -->
+  <rect x="32" y="32" width="448" height="448" rx="100" fill="url(#bgGrad)" filter="url(#shadow)"/>
+  
+  <!-- Shopping cart icon -->
+  <g transform="translate(96, 120)" filter="url(#shadow)">
+    <!-- Cart body -->
+    <path d="M40 40 L80 40 L120 200 L280 200 L310 80 L100 80" 
+          stroke="url(#cartGrad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Cart handle -->
+    <circle cx="30" cy="35" r="12" fill="url(#cartGrad)"/>
+    <!-- Wheels -->
+    <circle cx="140" cy="240" r="22" fill="url(#cartGrad)"/>
+    <circle cx="260" cy="240" r="22" fill="url(#cartGrad)"/>
+    <!-- Inner wheel circles -->
+    <circle cx="140" cy="240" r="8" fill="#4F46E5"/>
+    <circle cx="260" cy="240" r="8" fill="#4F46E5"/>
+  </g>
+  
+  <!-- "POS" text -->
+  <text x="256" y="430" font-family="Arial, sans-serif" font-size="72" font-weight="bold" 
+        fill="white" text-anchor="middle" letter-spacing="8">POS</text>
+</svg>

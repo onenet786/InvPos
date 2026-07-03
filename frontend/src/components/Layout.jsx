@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -15,6 +16,8 @@ import {
   LogOut,
   Store,
   Settings,
+  Menu,
+  X,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -43,15 +46,35 @@ export default function Layout({ children }) {
   };
 
   const visibleItems = navItems.filter((item) => hasRole(item.roles));
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <aside className="w-64 bg-gray-900 text-white flex flex-col flex-shrink-0">
-        <div className="p-4 border-b border-gray-700">
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <aside
+        className={clsx(
+          'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col flex-shrink-0 transition-transform duration-300',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        )}
+      >
+        <div className="p-4 border-b border-gray-700 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Store className="w-6 h-6 text-primary-400" />
             <span className="text-lg font-bold">InvPos</span>
           </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-gray-400 hover:text-white"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         <nav className="flex-1 overflow-y-auto py-4">
@@ -97,7 +120,16 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto">
+        {/* Mobile top bar */}
+        <div className="lg:hidden sticky top-0 z-20 bg-gray-900 text-white px-4 py-3 flex items-center gap-3">
+          <button onClick={() => setSidebarOpen(true)} className="text-white">
+            <Menu className="w-6 h-6" />
+          </button>
+          <span className="font-bold text-lg">InvPos</span>
+        </div>
+        {children}
+      </main>
     </div>
   );
 }

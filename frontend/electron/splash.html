@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InvPos POS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #9333EA 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      user-select: none;
+    }
+    .splash-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .logo-wrapper {
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .logo-wrapper svg {
+      width: 110px;
+      height: 110px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.1); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(255,255,255,0.1); }
+    }
+    .app-name {
+      font-size: 42px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .app-tagline {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+      margin-top: -12px;
+    }
+    .loader {
+      width: 200px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .loader-bar {
+      width: 40%;
+      height: 100%;
+      background: white;
+      border-radius: 4px;
+      animation: loading 1.5s ease-in-out infinite;
+    }
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+    .version {
+      position: absolute;
+      bottom: 24px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-container">
+    <div class="logo-wrapper">
+      <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FFFFFF"/>
+            <stop offset="100%" style="stop-color:#E0E7FF"/>
+          </linearGradient>
+        </defs>
+        <g transform="translate(96, 100)">
+          <path d="M40 40 L80 40 L120 200 L280 200 L310 80 L100 80" 
+                stroke="url(#cartGrad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="30" cy="35" r="12" fill="url(#cartGrad)"/>
+          <circle cx="140" cy="240" r="22" fill="url(#cartGrad)"/>
+          <circle cx="260" cy="240" r="22" fill="url(#cartGrad)"/>
+          <circle cx="140" cy="240" r="8" fill="#4F46E5"/>
+          <circle cx="260" cy="240" r="8" fill="#4F46E5"/>
+        </g>
+        <text x="256" y="430" font-family="Arial, sans-serif" font-size="72" font-weight="bold" 
+              fill="white" text-anchor="middle" letter-spacing="8">POS</text>
+      </svg>
+    </div>
+    <div style="text-align: center;">
+      <div class="app-name">InvPos</div>
+      <div class="app-tagline">Inventory &amp; Point of Sale System</div>
+    </div>
+    <div class="loader">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+  <div class="version">Version 1.0.0</div>
+</body>
+</html>

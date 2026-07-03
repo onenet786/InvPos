@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "electron/main.js",
+  "main": "electron/main.cjs",
   "author": "InvPos",
   "description": "InvPos - Inventory & Point of Sale System",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:3021 && cross-env ELECTRON_IS_DEV=1 electron electron/main.js\"",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:3021 && cross-env ELECTRON_IS_DEV=1 electron electron/main.cjs\"",
     "electron:build": "vite build && electron-builder --win",
     "electron:build:portable": "vite build && electron-builder --win portable",
     "dist": "vite build && electron-builder --win nsis"
@@ -43,7 +43,7 @@
     "appId": "com.invpos.pos",
     "productName": "InvPos POS",
     "directories": {
-      "output": "release",
+      "output": "release-v2",
       "buildResources": "build"
     },
     "files": [

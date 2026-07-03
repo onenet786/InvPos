@@ -11,6 +11,8 @@ frontend/.env
 # Build
 frontend/dist/
 frontend/release/
+frontend/release-new/
+frontend/release-v2/
 
 # Docker
 pgdata/
